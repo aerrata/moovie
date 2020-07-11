@@ -1,5 +1,19 @@
 @tailwind base;
 
+/**
+ * Remove the default box-shadow for invalid elements to prevent
+ * inputs in Livewire components showing with a
+ * red border by default in Firefox.
+ */
+input:invalid, textarea:invalid, select:invalid {
+    @apply shadow-none;
+}
+
 @tailwind components;
 
 @tailwind utilities;
+
+/* Turbolink progress bar */
+.turbolinks-progress-bar {
+    @apply bg-purple-500;
+}

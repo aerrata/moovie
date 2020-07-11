@@ -591,6 +591,16 @@ video {
   height: auto;
 }
 
+/**
+ * Remove the default box-shadow for invalid elements to prevent
+ * inputs in Livewire components showing with a
+ * red border by default in Firefox.
+ */
+
+input:invalid, textarea:invalid, select:invalid {
+  box-shadow: none;
+}
+
 .container {
   width: 100%;
 }
@@ -19482,6 +19492,14 @@ video {
 
 .delay-1000 {
   transition-delay: 1000ms;
+}
+
+/* Turbolink progress bar */
+
+.turbolinks-progress-bar {
+  --bg-opacity: 1;
+  background-color: #9f7aea;
+  background-color: rgba(159, 122, 234, var(--bg-opacity));
 }
 
 @media (min-width: 640px) {
