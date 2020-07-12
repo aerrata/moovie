@@ -8,7 +8,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
-    <body class="antialiased font-sans bg-dark-900 text-gray-100">
+    <body class="antialiased font-sans bg-dark-900 text-gray-100 text-base">
         <nav class="border-b border-dark-800 font-semibold uppercase tracking-wider">
             <div class="container py-6 mx-auto flex flex-col lg:flex-row items-center justify-between">
                 <div class="flex flex-col lg:flex-row items-center justify-between">
