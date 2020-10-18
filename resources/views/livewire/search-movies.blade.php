@@ -25,7 +25,7 @@
             <ul>
                 @forelse ($results as $result)
                 <li class="border-b border-dark-700 mb-4 text-sm">
-                    <a href="{{ route('movies.show', $result['id']) }}" class="flex items-center hover:bg-dark-700 px-4 py-2" @if ($loop->last) @keydown.tab.exact="open = false" @endif>
+                    <a href="{{ route('movies.show', $result['id']) }}" class="flex items-center hover:bg-dark-700 px-4 py-2" @if ($loop->last) @endif>
                         @if ($result['poster_path'])
                         <img src="{{ 'https://image.tmdb.org/t/p/w92' . $result['poster_path'] }}" alt="{{ $result['title'] }}" class="w-10 rounded mr-4">
                         @else
