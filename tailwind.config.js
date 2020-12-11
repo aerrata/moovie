@@ -1,5 +1,6 @@
 module.exports = {
   purge: [],
+  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
@@ -18,8 +19,10 @@ module.exports = {
     },
   },
   variants: {
-    textColor: ['responsive', 'hover', 'focus', 'group-hover'],
-    opacity: ['responsive', 'hover', 'focus', 'group-hover'],
+    extend: {
+      textColor: ['responsive', 'hover', 'focus', 'group-hover'],
+      opacity: ['responsive', 'hover', 'focus', 'group-hover'],
+    },
   },
   plugins: [],
 }
