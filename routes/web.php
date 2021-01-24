@@ -15,3 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'MovieController@index')->name('movies');
 Route::get('/movies/{movie}', 'MovieController@show')->name('movies.show');
+
+Route::get('/partial/popular-movies', 'MovieController@partialPopularMovies')->name('movies.partialPopularMovies');
+Route::get('/partial/now-playing-movies', 'MovieController@partialNowPlayingMovies')->name('movies.partialNowPlayingMovies');

@@ -11,7 +11,7 @@ class MoviesViewModel extends ViewModel
     public $nowPlayingMovies;
     public $genres;
 
-    public function __construct($popularMovies, $nowPlayingMovies, $genres)
+    public function __construct($popularMovies = null, $nowPlayingMovies = null, $genres = null)
     {
         $this->popularMovies = $popularMovies;
         $this->nowPlayingMovies = $nowPlayingMovies;

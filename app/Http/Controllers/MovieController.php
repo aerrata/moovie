@@ -13,45 +13,67 @@ class MovieController extends Controller
 {
     public function index()
     {
-        // Get popular movies
-        $popularMovies = Cache::remember('popular-movies', Carbon::parse('10 minutes'), function () {
-            return Http::withToken(config('services.tmdb.token'))
-                        ->get('https://api.themoviedb.org/3/movie/popular')
-                        ->json()['results'];
-        });
-
-        // Get now playing movies
-        $nowPlayingMovies = Cache::remember('now-playing-movies', Carbon::parse('10 minutes'), function () {
-            return Http::withToken(config('services.tmdb.token'))
-                        ->get('https://api.themoviedb.org/3/movie/now_playing')
-                        ->json()['results'];
-        });
-
-        // Get all genre
-        $genres = Cache::remember('genres', Carbon::parse('10 minutes'), function () {
-            return Http::withToken(config('services.tmdb.token'))
-                        ->get('https://api.themoviedb.org/3/genre/movie/list')
-                        ->json()['genres'];
-        });
-
-        $viewModel = new MoviesViewModel(
-            $popularMovies,
-            $nowPlayingMovies,
-            $genres,
-        );
-
-        return view('movie.index', $viewModel);
+        return view('movie.index', [
+            'popularMoviesPartialCache' => Cache::get('partial.popular-movies'),
+            'nowPlayingMoviesPartialCache' => Cache::get('partial.now-playing-movies')
+        ]);
     }
 
     public function show($id)
     {
         // Get a movie by id
         $movie = Http::withToken(config('services.tmdb.token'))
-                    ->get('https://api.themoviedb.org/3/movie/' . $id . '?append_to_response=videos,images')
-                    ->json();
+            ->get('https://api.themoviedb.org/3/movie/' . $id . '?append_to_response=videos,images')
+            ->json();
 
         $viewModel = new MovieViewModel($movie);
 
         return view('movie.show', $viewModel);
+    }
+
+    public function partialPopularMovies()
+    {
+        return Cache::remember('partial.popular-movies', Carbon::parse('10 minutes'), function () {
+            // Get popular movies
+            $popularMovies = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/movie/popular')
+                ->json()['results'];
+
+            // Get all genre
+            $genres = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/genre/movie/list')
+                ->json()['genres'];
+
+            $viewModel = new MoviesViewModel(
+                $popularMovies,
+                null,
+                $genres,
+            );
+
+            return view('partials._popular-movies', $viewModel)->render();
+        });
+    }
+
+    public function partialNowPlayingMovies()
+    {
+        return Cache::remember('partial.now-playing-movies', Carbon::parse('10 minutes'), function () {
+            // Get now playing movies
+            $nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/movie/now_playing')
+                ->json()['results'];
+
+            // Get all genre
+            $genres = Http::withToken(config('services.tmdb.token'))
+                ->get('https://api.themoviedb.org/3/genre/movie/list')
+                ->json()['genres'];
+
+            $viewModel = new MoviesViewModel(
+                null,
+                $nowPlayingMovies,
+                $genres,
+            );
+
+            return view('partials._now-playing-movies', $viewModel)->render();
+        });
     }
 }
